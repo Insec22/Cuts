@@ -43,7 +43,6 @@ export function GallerySection() {
   const [hoveredImage, setHoveredImage] = useState<number | null>(null)
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [lightboxImage, setLightboxImage] = useState<number | null>(null)
-  const [imageLoaded, setImageLoaded] = useState<{ [key: number]: boolean }>({})
 
   const filteredImages =
     selectedCategory === "all" ? galleryImages : galleryImages.filter((img) => img.category === selectedCategory)
@@ -66,10 +65,6 @@ export function GallerySection() {
       newIndex = currentIndex < filteredImages.length - 1 ? currentIndex + 1 : 0
     }
     setLightboxImage(filteredImages[newIndex].id)
-  }
-
-  const handleImageLoad = (imageId: number) => {
-    setImageLoaded((prev) => ({ ...prev, [imageId]: true }))
   }
 
   return (
@@ -114,18 +109,13 @@ export function GallerySection() {
               onMouseLeave={() => setHoveredImage(null)}
               onClick={() => openLightbox(image.id)}
             >
-              {!imageLoaded[image.id] && (
-                <div className="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300 animate-pulse rounded-lg" />
-              )}
+              <div className="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300 animate-pulse rounded-lg" />
 
               <img
-                src={image.src || "/placeholder.svg"}
+                src={image.src || "/placeholder.svg?height=400&width=300&query=" + encodeURIComponent(image.alt)}
                 alt={image.alt}
-                className={cn(
-                  "w-full h-auto object-cover transition-all duration-500 group-hover:scale-110",
-                  imageLoaded[image.id] ? "opacity-100" : "opacity-0",
-                )}
-                onLoad={() => handleImageLoad(image.id)}
+                className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-110 relative z-10"
+                loading="lazy"
               />
 
               <div
