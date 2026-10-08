@@ -9,8 +9,7 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "Classic Cuts - Barbearia Premium",
   description:
-    "A barbearia mais confiável da cidade. Cortes premium, barbas clássicas, estilo moderno. Mais de 15 anos de experiência.",
-    generator: 'v0.app'
+    "A barbearia mais confiável da cidade. Cortes premium, barbas clássicas, estilo moderno. Mais de 15 anos de experiência."
 }
 
 export default function RootLayout({
